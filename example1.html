@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>document</title>
+</head>
+<body>
+    <div id="content">"Hello world"</div>
+    <script>
+        const element=document.getElementById("content");
+        console.log(element)
+    </script>
+    <div id="greeting"></div>
+    <script>
+        const greeting=document.getElementById("greeting");
+        greeting.innerHTML="<h1>Willkommen zu house<h1>";
+        greeting.style.color="blue"
+        console.log(greeting)
+    </script>
+    <button id="changing">Change colour</button>
+    <div id="box" style="width:100px; height:100px;background-color:blue"></div>
+    <script>
+        document.getElementById("changing").onclick=function(){
+            const box=document.getElementById("box");
+            box.style.backgroundColor="green"
+        }
+    </script>
+    <ul id="list">
+    <li>item 1</li>
+    <li>item 2</li>
+    </ul>
+    <button id="add-item">ADD item</button>
+    <script>
+        document.getElementById("add-item").onclick=function(){
+        const newitem=document.createElement("li");
+        newitem.textContent="new item";
+        document.getElementById("list").appendChild(newitem)}
+   </script>
+   <input type="text" id="inputbox" />
+   <p id="outbox"></p>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      document.getElementById("inputbox").addEventListener("input", function () {
+        const myoutput = document.getElementById("outbox");
+        myoutput.textContent = "Hallo " + this.value;
+      });
+    });
+  </script>
+<input type="text" id="itemInput" placeholder="Schreibe mein Deutschwissen auf"/>
+<button id="addnewbutton">Eintrag hinzufügen</button>
+<ul id="itemList"></ul>
+
+<script>
+  document.getElementById("addnewbutton").onclick = function () {
+    const input = document.getElementById("itemInput");
+    const newTextItem = input.value.trim();
+    if (newTextItem) {
+      const newItem = document.createElement("li");
+      newItem.textContent = newTextItem;
+
+      const removeButton = document.createElement("button");
+      removeButton.textContent = "delete";
+      removeButton.onclick = function () {
+        newItem.remove();
+      };
+
+      newItem.appendChild(removeButton);
+      document.getElementById("itemList").appendChild(newItem); // Burada "itemList" olacak
+      input.value = "";
+    }
+  };
+</script>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+    
+
+
+
+   
+
+</html>
