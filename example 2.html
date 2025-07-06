@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <title>document</title>
+</head>
+<style>
+   #colour-box {
+      width: 200px;
+      height: 200px;
+      background-color: lightcoral;
+      transition: background-color 0, 3s ease
+   }
+
+   #mylist li {
+      display: list-item;
+   }
+</style>
+
+<body>
+   <button id="my-button">Bitte hier klicken</button>
+   <script>
+      document.getElementById("my-button").addEventListener("click", function () {
+         alert("the button is clicked")
+      })
+   </script>
+
+   <input type="text" id="myinput" placeholder="Bitte Schreibe deine Informationen">
+   <p>Der text ist hier:<span id="Display-Text"></span></p>
+   <script>
+      const input = document.getElementById("myinput");
+      const display = document.getElementById("Display-Text");
+      input.addEventListener("input", function () {
+         display.textContent = input.value
+      });
+   </script>
+
+   <div id="colour-box"></div>
+   <script>
+      const box = document.getElementById("colour-box");
+      box.addEventListener("mouseover", function () {
+         box.style.background = "red"
+      })
+      box.addEventListener("mouseout", function () {
+         box.style.background = "yellow"
+      })
+   </script>
+   <!-- The text entered in the searchinput displays only the matching items from the list. -->
+
+
+   <input type="text" id="searchinput" placeholder="Suche...." />
+   <ul id="mylist">
+      <li>Apfel</li>
+      <li>Banane</li>
+      <li>Kirsche</li>
+   </ul>
+   <script>
+      const searchinput = document.getElementById("searchinput")
+      const listitem = document.querySelectorAll("#mylist li")
+      searchinput.addEventListener("input", function () {
+         const filter = this.value.toLowerCase()
+         listitem.forEach(function (item) {
+            const text = item.textContent.toLowerCase()
+            item.style.display = text.includes(filter) ? "" : "none"
+         })
+      })
+   </script>
+   <!-- Create two buttons to increase and decrease a counter. 
+     The counter value should not go below zero. -->
+
+   <div>
+      <button id="decrease">Decrease</button>
+      <span id="counter">0</span>
+      <button id="increase">Increase</button>
+   </div>
+   <script>
+      const counter = document.getElementById("counter");
+      let countValue = 0;
+      document.getElementById("increase").addEventListener("click", function () {
+         countValue++;
+         counter.textContent = countValue;
+      });
+      document.getElementById("decrease").addEventListener("click", function () {
+         if (countValue > 0) {
+            countValue--;
+            counter.textContent = countValue;
+         }
+      });
+   </script>
+   <!-- Create an application that adds values from two input fields (for name and surname) 
+     to a table when entered by the user. -->
+
+   <div>
+      <input type="text" id="firstname" placeholder="Dein name?" />
+      <input type="text" id="lastname" placeholder="Dein nachname?" />
+      <button id="additem">Add User</button>
+   </div>
+   <table border="1">
+      <thead>
+         <tr>
+            <th>Name</th>
+            <th>Nachname</th>
+         </tr>
+      </thead>
+      <tbody id="UserTable"></tbody>
+   </table>
+   <script>
+      document.getElementById("additem").addEventListener("click", function () {
+         const Firstname = document.getElementById("firstname").value;
+         const Surname = document.getElementById("lastname").value;
+         if (Firstname && Surname) {
+            const NewRow = document.createElement("tr");
+            NewRow.innerHTML = `<td>${Firstname}</td><td>${Surname}</td>`;
+            document.getElementById("UserTable").appendChild(NewRow);
+         }
+      })
+   </script>
+   <!-- Create a timer that starts counting seconds with a "Start" button and pauses with a "Stop" button -->
+
+   <div>
+      <button id="starttimekeeper">Starten</button>
+      <button id="stoptimekeeper">Stoppen</button>
+      <span id="timerDisplay">Zeitmesser</span>
+   </div>
+   <script>
+      let time;
+      let second = 0;
+
+      document.getElementById("starttimekeeper").addEventListener("click", function () {
+         if (!time) {
+            time = setInterval(function () {
+               second++;
+               document.getElementById("timerDisplay").textContent = second;
+            }, 1000);
+         }
+      });
+
+      document.getElementById("stoptimekeeper").addEventListener("click", function () {
+         clearInterval(time);
+         time = null;
+         console.log(time)
+      });
+   </script>
+
+
+
+   <!-- Dynamically show the number of words written in a textarea -->
+
+
+   <div>
+      <textarea id="texting" rows="6" cols="5" placeholder="Schreiben....."></textarea>
+      <p>Wortanzahl: <span id="wordno">0</span></p>
+   </div>
+
+   <script>
+      document.getElementById("texting").addEventListener("input", function () {
+         const text = this.value.trim();
+         const wortAnzahl = text ? text.split(/\s+/) : [];
+         document.getElementById("wordno").textContent = wortAnzahl.length;
+      });
+   </script>
+
+
+   <!--Making a game with regard to stone,paper and scissors-->
+
+   <div>
+      <h2>game of stone ,scissors,paper</h2>
+      <button id="stone">Stone</button>
+      <button id="scissor">Scissors</button>
+      <button id="paper">Paper</button>
+      <p id="result"></p>
+   </div>
+   <script>
+      const choices = ["Stone", "Scissors", "Paper"];
+      const resultdisplay = document.getElementById("result");
+
+      function playgame(choiceofuser) {
+         const computerofchoice = choices[Math.floor(Math.random() * choices.length)];
+
+         if (choiceofuser === computerofchoice) {
+            resultdisplay.textContent = `It's a draw! We both chose ${computerofchoice}.`;
+         }
+         else if (
+            (choiceofuser === "Stone" && computerofchoice === "Scissors") ||
+            (choiceofuser === "Scissors" && computerofchoice === "Paper") ||
+            (choiceofuser === "Paper" && computerofchoice === "Stone")
+         ) {
+            resultdisplay.textContent = `You won! ${choiceofuser} beats ${computerofchoice}.`;
+         }
+         else {
+            resultdisplay.textContent = `You lost! ${computerofchoice} beats ${choiceofuser}.`;
+         }
+      }
+
+      document.getElementById("stone").addEventListener("click", function () {
+         playgame("Stone");
+      });
+      document.getElementById("scissor").addEventListener("click", function () {
+         playgame("Scissors");
+      });
+      document.getElementById("paper").addEventListener("click", function () {
+         playgame("Paper");
+      });
+   </script>
+
+   <!---->
+   <form id="myform">
+      <input type="text" placeholder="your name?">
+      <button type="submit">send</button>
+   </form>
+   <script>
+      document.getElementById("myform").addEventListener("submit", function (e) {
+         e.preventDefault()
+         console.log(`the form is sent and website is not renewed`)
+      })
+   </script>
+
+   <!---->
+   <p id="my_paragraph">Das is mein Absatz</p>
+   <script>
+      document.getElementById("my_paragraph").addEventListener("dblclick", function () {
+         my_paragraph.style.fontWeight = "bold"
+      })
+   </script>
+   <!---->
+   <input type="text" id="focusing_object" placeholder="move mouse to focus">
+   <script>
+      const myfocus = document.getElementById("focusing_object");
+      myfocus.addEventListener("focus", function () {
+         this.style.border = "10px solid green"
+      })
+      myfocus.addEventListener("blur", function () {
+         this.style.border = "7px solid orange"
+      })
+   </script>
+   <!---->
+   <script>
+      document.addEventlistener("scroll", function () {
+         console.log("the website is scrolled .the gap scrolled:" + window.scrollY)
+      })
+   </script>
+   <!--
+   <h1>Disabled Right Click</h1>
+   <p>Try right click</p>
+   <script>
+      document.addEventListener("contextmenu",function(event){
+         event.preventDefault();
+         alert("Right click is disabled on this page")
+      })
+   </script>
+-->
+   <script>
+      document.addEventListener("keydown", function (event) {
+         console.log("the key you typed:" + event.key)
+      }
+      )
+   </script>
+   <!---->
+   <img id="picture" src="Beyaz ve Siyah Basit Çizgili Beyaz Kullanıcı Arayüzü Boş Prototip Web Sitesi.png" alt="img">
+   <script>
+      document.getElementById("picture").addEventListener("load", function () {
+         console.log("the picture is loaded")
+      })
+   </script>
+   <!---->
+   <input type="text" id="inputsearched" placeholder="look for what you want....">
+   <ul id="mylist">
+      <li>Apple</li>
+      <li>Pear</li>
+      <li>Banana</li>
+      <li>Strawberry</li>
+      <li>Watermelon</li>
+   </ul>
+   <script>
+      const inputSearched = document.getElementById("inputsearched")
+      const Listitem = document.querySelectorAll("#mylist li")
+
+      inputSearched.addEventListener("input", function () {
+         const filter = this.value.toLowerCase();
+         Listitem.forEach(function (item) {
+            let small_text = item.textContent.toLowerCase();
+            item.style.display = small_text.includes(filter) ? "" : "none"
+         })
+      })
+   </script>
+
+     <!--making clock-->>
+  <p id="clock" style="font-size:30px;font-weight:bold"></p>
+<script>
+  function updating_clock(){
+    const now = new Date();
+    const time = now.toLocaleTimeString();
+    const date = now.toLocaleDateString();
+    document.getElementById("clock").textContent = date + " - " + time;
+  }
+  
+  updating_clock();
+  setInterval(updating_clock, 1000);
+</script>
+</body>
+</html>
